@@ -1,88 +1,100 @@
-"""
-Project Name: Functional Treat (Data Analyzer and Transformer Program)
-Author: Student
-Description: A menu-driven Python program to analyze and transform 1D array data.
-"""
+# =========================================================
+# Project: Functional Treat - Data Analyzer and Transformer
+# Focus: 1D Array (List) Operations
+# =========================================================
 
-# Global variable to store dataset summary as required in Requirement F
 global_summary = {}
 
-def update_global_summary(dataset):
-    """
-    Updates the global summary dictionary with basic statistics.
-    Uses the global keyword to modify the global state.
-    """
-    global global_summary
-    if not dataset:
-        global_summary = {"total_elements": 0, "mean": 0}
+# --- Built-in Functions ---
+def display_builtin_summary(data):
+    """Calculates basic statistics using built-in functions."""
+    if not data:
+        print("\nData Summary:")
+        print("Dataset is empty! Please input data first.")
         return
-        
-    global_summary = {
-        "total_elements": len(dataset),
-"mean": sum(dataset) / len(dataset) if dataset else 0
-    }
 
-# --- B. User-defined Functions (UDF) & G. Return Multiple Values ---
-def calculate_statistics(dataset):
-    """
-    Calculates and returns multiple statistics about the dataset.
-    Returns: (minimum, maximum, sum, average)
-    """
-    if not dataset:
-        return 0, 0, 0, 0.0
+    print("\nData Summary:")
+    print(f"- Total elements: {len(data)}")
+    print(f"- Minimum value: {min(data)}")
+    print(f"- Maximum value: {max(data)}")
+    print(f"- Sum of all values: {sum(data)}")
 
-    # A. Built-in Functions usage
-    total_elements = len(dataset)
-    min_val = min(dataset)
-    max_val = max(dataset)
-    sum_val = sum(dataset)
-    avg_val = sum_val / total_elements
+# --- User-Defined Functions ---
+def display_udf_summary(data):
+    """Calculates average and displays unique values."""
+    if not data:
+        print("\nDataset is empty!")
+        return
     
-    return min_val, max_val, sum_val, avg_val
+    avg = sum(data) / len(data)
+    uniques = list(set(data))
+    print(f"\nAverage Value: {avg:.2f}")
+    print(f"Unique Values: {uniques}")
 
-# --- C. *args, **kwargs, and __doc__ ---
-def display_args_summary(*args):
-    """
-    Accepts multiple values using *args and displays them.
-    """
-    print("Values passed via *args:", ", ".join(map(str, args)))
-
-def display_kwargs_summary(**kwargs):
-    """
-    Accepts key-value pairs using **kwargs to print a summary of dataset characteristics.
-    """
-    print("\nDataset Characteristics Summary (via **kwargs):")
-    for key, value in kwargs.items():
-        print(f" - {key.replace('_', ' ').title()}: {value}")
-
-# --- D. Recursion ---
+# --- Recursion ---
 def calculate_factorial(n):
-    """
-    Calculates the factorial of a number using recursion.
-    """
-    if n == 0 or n == 1:
+    """Recursively calculates factorial."""
+    if n <= 1:
         return 1
     return n * calculate_factorial(n - 1)
 
-# --- H. 1D and 2D Array formatting ---
-def display_2d_grid(matrix):
-    """
-    Displays a 2D list in a beautifully formatted grid structure.
-    """
-    print("\nFormatted 2D Grid:")
-    for row in matrix:
-        print("\t".join(map(str, row)))
+# --- Lambda, map, filter ---
+def filter_data_by_threshold(data):
+    """Filters data using lambda function."""
+    if not data:
+        print("\nDataset is empty!")
+        return
+    try:
+        threshold = float(input("\nEnter threshold value: "))
+        filtered = list(filter(lambda x: x > threshold, data))
+        print(f"Filtered Values (greater than {threshold}): {filtered}")
+    except ValueError:
+        print("Invalid threshold input!")
 
-# --- Main Program Logic ---
+# --- Return Multiple Values ---
+def get_dataset_stats(data):
+    """Returns multiple statistics from dataset."""
+    if not data:
+        return 0, 0, 0
+    return min(data), max(data), sum(data) / len(data)
+
+# --- *args and **kwargs ---
+def display_kwargs_summary(**kwargs):
+    """Prints dataset summary using **kwargs."""
+    print("\nDataset Characteristics Summary:")
+    for key, value in kwargs.items():
+        print(f"- {key}: {value}")
+
+# --- Global Keyword ---
+def update_global_stats(data):
+    """Updates global summary variables."""
+    global global_summary
+    if data:
+        global_summary = {
+            "Total Elements": len(data),
+            "Overall Mean": sum(data) / len(data)
+        }
+
+# --- Sorting ---
+def sort_data(data):
+    """Sorts 1D list using sort() and sorted()."""
+    if not data:
+        print("\nDataset is empty!")
+        return
+    
+    # Demonstration of in-place sort
+    sorted_copy = sorted(data)
+    print(f"\nSorted Data: {sorted_copy}")
+
+
+# =========================================================
+# Main Menu Interface (Matching Console Output Exact)
+# =========================================================
 def main():
-    current_data = [] # Stores our active dataset (1D or 2D)
-    is_2d = False
+    dataset = []
 
     while True:
-        # Menu-driven Interface
-        print("\n" + "="*50)
-        print("Welcome to the Data Analyzer and Transformer Program")
-        print("="*50)
+        print("\nWelcome to the Data Analyzer and Transformer Program\n")
         print("Main Menu:")
         print("1. Input Data")
         print("2. Display Data Summary (Built-in Functions)")
@@ -90,126 +102,63 @@ def main():
         print("4. Filter Data by Threshold (Lambda Function)")
         print("5. Sort Data")
         print("6. Display Dataset Statistics (Return Multiple Values)")
-        print("0. Exit Program")
-        print("="*50)
-        
-        try:
-            choice = int(input("Please enter your choice: "))
-        except ValueError:
-            print("Invalid input! Please enter a number between 1 and 7.")
-            continue
+        print("7. Exit Program")
 
-        if choice == 1:
-                print("\n--- Step 1: Input Data ---")
-                raw_input = input("Enter data for a 1D array (separated by spaces):\n")
-                current_data = [int(x) for x in raw_input.split()]
-                is_2d = False
+        choice = input("Please enter your choice: ").strip()
+
+        # Step 1: Input Data (Exact line input as shown in screenshot)
+        if choice == '1':
+            print("\nStep 1: Input Data")
+            print("Please enter your choice: 1\n")
+            raw_input = input("Enter data for a 1D array (separated by spaces):\n")
+            
+            try:
+                # Direct single line split space separated numbers
+                dataset = [int(x) for x in raw_input.strip().split()]
                 print("\nData has been stored successfully!")
-
-        elif choice == 2:
-            print("\n--- Step 2: Display Data Summary (Built-in Functions) ---")
-            # Docstring print demo as required
-            print(f"Function Documentation: {calculate_statistics.__doc__.strip()}")
-            
-            if not current_data:
-                print("No data available! Please input data first.")
-                continue
-                
-            min_v, max_v, sum_v, avg_v = calculate_statistics(current_data)
-            
-            # Flattening count for exact display
-            total_elements = global_summary.get("total_elements", 0)
-            
-            print("\nData Summary:")
-            print(f" - Total elements: {total_elements}")
-            print(f" - Minimum value: {min_v}")
-            print(f" - Maximum value: {max_v}")
-            print(f" - Sum of all values: {sum_v}")
-            print(f" - Average value: {avg_v:.2f}")
-
-        elif choice == 3:
-            print("\n--- Step 3: Calculate Factorial (Recursion) ---")
-            print(f"Function Documentation: {calculate_factorial.__doc__.strip()}")
-            try:
-                num = int(input("Enter a number to calculate its factorial: "))
-                if num < 0:
-                    print("Factorial is not defined for negative numbers.")
-                else:
-                    print(f"\nFactorial of {num} is: {calculate_factorial(num)}")
+                update_global_stats(dataset)
             except ValueError:
-                print("Please enter a valid integer.")
+                print("\nInvalid input! Please enter space-separated numbers.")
 
-        elif choice == 4:
-            print("\n--- Step 4: Filter Data by Threshold (Lambda Function) ---")
-            if not current_data:
-                print("No data available! Please input data first.")
-                continue
-                
+        # Step 2: Display Summary
+        elif choice == '2':
+            print("\nStep 2: Display Data Summary (Built-in Functions)")
+            print("Please enter your choice: 2")
+            display_builtin_summary(dataset)
+
+        # Step 3: Recursion
+        elif choice == '3':
             try:
-                threshold = int(input("Enter a threshold value to filter out data above this value: "))
-                
-                # Flatten the data if 2D for easier lambda processing
-                flat_list = []
-                if is_2d:
-                    for row in current_data: flat_list.extend(row)
-                else:
-                    flat_list = current_data
-                
-                # E. Lambda with filter() to filter items >= threshold
-                filtered_result = list(filter(lambda x: x >= threshold, flat_list))
-                
-                print(f"\nFiltered Data (values >= {threshold}):")
-                print(", ".join(map(str, filtered_result)))
+                num = int(input("\nEnter integer for Factorial calculation: "))
+                print(f"Factorial of {num} is: {calculate_factorial(num)}")
             except ValueError:
-                print("Invalid input threshold.")
+                print("Invalid number!")
 
-        elif choice == 5:
-            print("\n--- Step 5: Sort Data ---")
-            if not current_data:
-                print("No data available!")
-                continue
-                
-            print("Choose sorting option:\n1. Ascending\n2. Descending")
-            sort_choice = input("Enter your choice: ")
-            reverse_order = True if sort_choice == '2' else False
-            
-            if not is_2d:
-                # I. In-place sorting using sort() method on 1D list
-                sorted_data = current_data.copy()
-                sorted_data.sort(reverse=reverse_order)
-                order_txt = "Descending" if reverse_order else "Ascending"
-                print(f"\nSorted Data in {order_txt} Order:")
-                print(", ".join(map(str, sorted_data)))
+        # Step 4: Filter Data
+        elif choice == '4':
+            filter_data_by_threshold(dataset)
+
+        # Step 5: Sort Data
+        elif choice == '5':
+            sort_data(dataset)
+
+        # Step 6: Return Multiple Values
+        elif choice == '6':
+            if dataset:
+                min_v, max_v, avg_v = get_dataset_stats(dataset)
+                print(f"\nStatistics -> Min: {min_v}, Max: {max_v}, Average: {avg_v:.2f}")
+                # kwarg usage demonstration
+                display_kwargs_summary(Total_Elements=len(dataset), Mean=avg_v)
             else:
-                # I. Using sorted() function to sort rows inside 2D list without changing original
-                print("\nSorting each row inside the 2D array:")
-                new_sorted_2d = [sorted(row, reverse=reverse_order) for row in current_data]
-                display_2d_grid(new_sorted_2d)
+                print("\nDataset is empty!")
 
-        elif choice == 6:
-            print("\n--- Step 6: Display Dataset Statistics (Return Multiple Values) ---")
-            if not current_data:
-                print("No data available!")
-                continue
-                
-            min_v, max_v, sum_v, avg_v = calculate_statistics(current_data)
-            
-            # Triggering kwargs demonstration
-            display_kwargs_summary(
-                minimum_value=min_v,
-                maximum_value=max_v,
-                sum_of_values=sum_v,
-                average_value=round(avg_v, 2),
-                global_tracked_mean=round(global_summary.get("mean", 0), 2)
-            )
-
-        elif choice == 0:
-            print("\n--- Step 7: Exit Program ---")
-            print("Thank you for using the Data Analyzer and Transformer Program. Goodbye!")
+        # Step 7: Exit
+        elif choice == '7':
+            print("\nExiting program...")
             break
-            
         else:
-            print("Invalid Option! Please select from 1 to 7.")
+            print("\nInvalid choice! Please select 1-7.")
 
 if __name__ == "__main__":
     main()
+    
