@@ -1,7 +1,7 @@
 """
 Project Name: Functional Treat (Data Analyzer and Transformer Program)
 Author: Student
-Description: A menu-driven Python program to analyze and transform 1D or 2D array data.
+Description: A menu-driven Python program to analyze and transform 1D array data.
 """
 
 # Global variable to store dataset summary as required in Requirement F
