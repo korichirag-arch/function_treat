@@ -52,8 +52,5 @@ Main Menu:
 0. Exit Program
 ==================================================
 ```
-## Here it is video link just click and Watch it. 
-# HOW IT WORKS?
-https://drive.google.com/file/d/1EOs6cHmAx_DpjYQiRnPnfkO4tT86pbi9/view?usp=sharing
 ### You should run my program and enjoy it after that you'll tell me how's your expirenece about this.
 ## THANK YOU !✨
